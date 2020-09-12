@@ -5,21 +5,20 @@ using Terminal.Gui;
 namespace GuiPs1.Commands
 {
     [Cmdlet(VerbsCommon.New, "TerminalMenuBar")]
+    [OutputType(typeof(MenuBar))]
     public class NewTerminalMenuBarCommand : PSCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true)]
-        public MenuBarItem MenuBarItem { get; set; }
+        public MenuBarItem? MenuBarItem { get; set; }
 
-        private List<MenuBarItem> menuBarItems = new List<MenuBarItem>();
+        private readonly List<MenuBarItem> menuBarItems = new List<MenuBarItem>();
 
         protected override void ProcessRecord()
         {
-            this.menuBarItems.Add(this.MenuBarItem);
+            if (this.MenuBarItem is { })
+                this.menuBarItems.Add(this.MenuBarItem);
         }
 
-        protected override void EndProcessing()
-        {
-            this.WriteObject(new MenuBar(this.menuBarItems.ToArray()));
-        }
+        protected override void EndProcessing() => this.WriteObject(new MenuBar(this.menuBarItems.ToArray()));
     }
 }

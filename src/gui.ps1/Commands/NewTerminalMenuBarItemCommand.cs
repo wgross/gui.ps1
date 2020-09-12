@@ -1,17 +1,28 @@
-﻿using System.Management.Automation;
+﻿using System.Collections.Generic;
+using System.Management.Automation;
 using Terminal.Gui;
 
 namespace GuiPs1.Commands
 {
     [Cmdlet(VerbsCommon.New, "TerminalMenuBarItem")]
+    [OutputType(typeof(MenuBarItem))]
     public class NewTerminalMenuBarItemCommand : PSCmdlet
     {
         [Parameter(Mandatory = true)]
-        public string Title { get; set; }
+        public string Title { get; set; } = string.Empty;
 
-        protected override void EndProcessing()
+        [Parameter(ValueFromPipeline = true)]
+        [ValidateNotNull]
+        public MenuItem? MenuItem { get; set; }
+
+        private readonly List<MenuItem> menueItems = new List<MenuItem>();
+
+        protected override void ProcessRecord()
         {
-            this.WriteObject(new MenuBarItem(this.Title, new MenuBarItem[0]));
+            if (this.MenuItem is { })
+                this.menueItems.Add(this.MenuItem);
         }
+
+        protected override void EndProcessing() => this.WriteObject(new MenuBarItem(this.Title, this.menueItems.ToArray()));
     }
 }
