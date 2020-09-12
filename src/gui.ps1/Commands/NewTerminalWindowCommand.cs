@@ -22,15 +22,12 @@ namespace gui.ps1.Commands
         [Parameter]
         public Dim Height { get; set; } = Dim.Percent(100);
 
-        protected override void EndProcessing()
+        protected override void EndProcessing() => this.WriteObject(new Window(this.Title)
         {
-            this.WriteObject(new Window(this.Title)
-            {
-                X = this.X,
-                Y = this.Y,
-                Width = this.Width,
-                Height = this.Height
-            });
-        }
+            X = this.X,
+            Y = this.Y,
+            Width = this.Width,
+            Height = this.Height
+        });
     }
 }

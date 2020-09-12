@@ -13,10 +13,11 @@ namespace gui.ps1.Commands
         public string Title { get; set; } = string.Empty;
 
         [Parameter(Mandatory = false)]
-        public string? Help { get; set; } = string.Empty;
+        [ValidateNotNull]
+        public string Help { get; set; } = string.Empty;
 
         [Parameter(Mandatory = true, ParameterSetName = "withAction")]
-        public Action? Action { get; set; }
+        public Action Action { get; set; } = delegate { };
 
         [Parameter(Mandatory = false)]
         [ValidateNotNull]
