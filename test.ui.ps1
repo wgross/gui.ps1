@@ -27,6 +27,8 @@ $show_message_box = {
         New-TerminalButton -Text "Messagebox" -Clicked $show_message_box -X 3 -Y 5 
         # a checkbox
         New-TerminalCheckBox -Text "Checkbox" -X 3 -Y 7
+        # a radio group with two label
+        New-TerminalRadioGroup -X 3 -Y 9 -RadioLabels "one","two"
 
     ) | New-TerminalWindow -Title "test" -X 0 -Y 0
 
