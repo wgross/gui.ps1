@@ -6,7 +6,7 @@ namespace GuiPs1.Commands
 {
     [Cmdlet(VerbsCommon.Show, "TerminalErrorBox")]
     [OutputType(typeof(int))]
-    public sealed class ShowErrorBoxCommand : ShowBoxCommandBase
+    public sealed class ShowTerminalErrorBoxCommand : ShowTerminalBoxCommandBase
     {
         protected override int ShowBox(int width, int height, string title, string message, string[]? button) 
             => MessageBox.ErrorQuery(this.Height, this.Width, this.Title, this.Message, this.Buttons?.Select(b => (NStack.ustring)b).ToArray());

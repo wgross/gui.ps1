@@ -2,7 +2,7 @@
 
 namespace GuiPs1.Commands
 {
-    public abstract class ShowBoxCommandBase : PSCmdlet
+    public abstract class ShowTerminalBoxCommandBase : PSCmdlet
     {
         [Parameter(Mandatory = true)]
         public string Message { get; set; } = string.Empty;
