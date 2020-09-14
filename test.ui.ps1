@@ -6,6 +6,11 @@ using namespace System
 # declare som evenet handlers for reuse
 $quit_action = ([Action]{ [Application]::RequestStop() })
 
+$show_message_box = ([Action]{ 
+    $result = Show-TerminalMessageBox -Height 10 -Width 30 -Message "choose a button" -Title "title" -Buttons "A","B","C"
+    Show-TerminalErrorBox -Message "you chose button no $result" -Title "title" -Buttons "OK"
+})
+
 # create the application with mane and statusbar
 @(
     # build th menu
@@ -18,6 +23,9 @@ $quit_action = ([Action]{ [Application]::RequestStop() })
         New-TerminalLabel -Text  "This is a Label" -X 3 -Y 1
         # then a button
         New-TerminalButton -Text "Quit" -IsDefault -Clicked $quit_action -X 3 -Y 3 
+        # this button shows a message box
+        New-TerminalButton -Text "Messagebox" -Clicked $show_message_box -X 3 -Y 5 
+
     ) | New-TerminalWindow -Title "test" -X 0 -Y 0
 
 ) | Start-TerminalApplication

@@ -2,7 +2,7 @@
 using System.Management.Automation;
 using Terminal.Gui;
 
-namespace gui.ps1.Commands
+namespace GuiPs1.Commands
 {
     [Cmdlet(VerbsCommon.New, "TerminalMenuItem")]
     [CmdletBinding(DefaultParameterSetName = "withAction")]
