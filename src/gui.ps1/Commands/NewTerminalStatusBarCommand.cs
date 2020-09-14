@@ -6,7 +6,7 @@ namespace GuiPs1.Commands
 {
     [Cmdlet(VerbsCommon.New, "TerminalStatusBar")]
     [OutputType(typeof(StatusBar))]
-    public class NewTerminalStatusBarCommand : PSCmdlet
+    public sealed class NewTerminalStatusBarCommand : PSCmdlet
     {
         private readonly List<StatusItem> statusItems = new List<StatusItem>();
 

@@ -6,7 +6,7 @@ namespace GuiPs1.Commands
 {
     [Cmdlet(VerbsCommon.New, "TerminalMenuBarItem")]
     [OutputType(typeof(MenuBarItem))]
-    public class NewTerminalMenuBarItemCommand : PSCmdlet
+    public sealed class NewTerminalMenuBarItemCommand : PSCmdlet
     {
         [Parameter(Mandatory = true)]
         public string Title { get; set; } = string.Empty;

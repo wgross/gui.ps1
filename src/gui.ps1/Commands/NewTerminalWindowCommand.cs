@@ -5,8 +5,12 @@ namespace gui.ps1.Commands
 {
     [Cmdlet(VerbsCommon.New, "TerminalWindow")]
     [OutputType(typeof(Window))]
-    public class NewTerminalWindowCommand : PSCmdlet
+    public sealed class NewTerminalWindowCommand : PSCmdlet
     {
+        [Parameter(ValueFromPipeline = true)]
+        [ValidateNotNull]
+        public View? View { get; set; }
+
         [Parameter(Mandatory = true)]
         public string Title { get; set; } = string.Empty;
 
@@ -22,12 +26,26 @@ namespace gui.ps1.Commands
         [Parameter]
         public Dim Height { get; set; } = Dim.Percent(100);
 
-        protected override void EndProcessing() => this.WriteObject(new Window(this.Title)
+        private Window? window;
+
+        protected override void BeginProcessing()
         {
-            X = this.X,
-            Y = this.Y,
-            Width = this.Width,
-            Height = this.Height
-        });
+            this.window = new Window(this.Title)
+            {
+                X = this.X,
+                Y = this.Y,
+                Width = this.Width,
+                Height = this.Height
+            };
+        }
+
+        protected override void ProcessRecord()
+        {
+            if (this.View is null)
+                return;
+            this.window?.Add(this.View);
+        }
+
+        protected override void EndProcessing() => this.WriteObject(this.window);
     }
 }
