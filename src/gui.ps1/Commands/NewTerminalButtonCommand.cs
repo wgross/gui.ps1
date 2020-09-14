@@ -1,5 +1,4 @@
-﻿using System;
-using System.Management.Automation;
+﻿using System.Management.Automation;
 using Terminal.Gui;
 
 namespace GuiPs1.Commands
@@ -23,13 +22,13 @@ namespace GuiPs1.Commands
         public int Y { get; set; } = 0;
 
         [Parameter()]
-        public Action Clicked { get; set; } = delegate { };
+        public ScriptBlock Clicked { get; set; } = ScriptBlock.Create(string.Empty);
 
         protected override void ProcessRecord()
         {
             var button = new Button(this.X, this.Y, this.Text, this.IsDefault.ToBool());
             if (this.MyInvocation.BoundParameters.ContainsKey(nameof(Clicked)))
-                button.Clicked = this.Clicked;
+                button.Clicked = () => this.Clicked.InvokeReturnAsIs();
             this.WriteObject(button);
         }
     }

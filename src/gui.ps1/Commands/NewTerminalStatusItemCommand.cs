@@ -1,5 +1,4 @@
-﻿using System;
-using System.Management.Automation;
+﻿using System.Management.Automation;
 using Terminal.Gui;
 
 namespace GuiPs1.Commands
@@ -16,8 +15,8 @@ namespace GuiPs1.Commands
 
         [Parameter]
         [ValidateNotNull]
-        public Action Action { get; set; } = delegate { };
+        public ScriptBlock Action { get; set; } = ScriptBlock.Create(string.Empty);
 
-        protected override void ProcessRecord() => this.WriteObject(new StatusItem(this.Key, this.Title, this.Action));
+        protected override void ProcessRecord() => this.WriteObject(new StatusItem(this.Key, this.Title, () => this.Action.InvokeReturnAsIs()));
     }
 }

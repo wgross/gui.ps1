@@ -1,5 +1,4 @@
-﻿using System;
-using System.Management.Automation;
+﻿using System.Management.Automation;
 using Terminal.Gui;
 
 namespace GuiPs1.Commands
@@ -17,11 +16,11 @@ namespace GuiPs1.Commands
         public string Help { get; set; } = string.Empty;
 
         [Parameter(Mandatory = true, ParameterSetName = "withAction")]
-        public Action Action { get; set; } = delegate { };
+        public ScriptBlock Action { get; set; } = ScriptBlock.Create(string.Empty);
 
         [Parameter(Mandatory = false)]
         [ValidateNotNull]
-        public Func<bool> CanExecute { get; set; } = () => true;
+        public ScriptBlock CanExecute { get; set; } = ScriptBlock.Create("$true");
 
         [Parameter(ParameterSetName = "quit")]
         public SwitchParameter Quit { get; set; }
@@ -31,13 +30,26 @@ namespace GuiPs1.Commands
             switch (ParameterSetName)
             {
                 case "quit":
-                    this.WriteObject(new MenuItem(this.Title, this.Help, action: () => Application.RequestStop(), canExecute: this.CanExecute));
+                    this.WriteObject(new MenuItem(this.Title, this.Help, action: () => Application.RequestStop(), canExecute: () => this.AsBoolean(this.CanExecute.InvokeReturnAsIs())));
                     break;
 
                 default:
-                    this.WriteObject(new MenuItem(this.Title, this.Help, action: this.Action, canExecute: this.CanExecute));
+                    this.WriteObject(new MenuItem(this.Title, this.Help, action: () => this.Action.InvokeReturnAsIs(), canExecute: () => this.AsBoolean(this.CanExecute.InvokeReturnAsIs())));
                     break;
             }
+        }
+
+        private bool AsBoolean(object obj) => obj switch
+        {
+            PSObject pso => AsBoolean(pso),
+            _ => false
+        };
+
+        private bool AsBoolean(PSObject pso)
+        {
+            if (pso.BaseObject is bool b)
+                return b;
+            else return false;
         }
     }
 }

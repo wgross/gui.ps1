@@ -3,15 +3,15 @@ using namespace System
 
 #New-TerminalMenuItem -Title "Q_uit" -Quit | New-TerminalMenuBarItem -Title "F_ile" | New-TerminalMenuBar | Start-TerminalApplication
 
-# declare som evenet handlers for reuse
-$quit_action = ([Action]{ [Application]::RequestStop() })
+# declare som event handlers for reuse
+$quit_action = { [Application]::RequestStop() }
 
-$show_message_box = ([Action]{ 
+$show_message_box = { 
     $result = Show-TerminalMessageBox -Height 10 -Width 30 -Message "choose a button" -Title "title" -Buttons "A","B","C"
     Show-TerminalErrorBox -Message "you chose button no $result" -Title "title" -Buttons "OK"
-})
+}
 
-# create the application with mane and statusbar
+# create the application with menue and statusbar
 @(
     # build th menu
     New-TerminalMenuItem -Title "Q_uit" -Action $quit_action | New-TerminalMenuBarItem -Title "F_ile" | New-TerminalMenuBar 
