@@ -12,11 +12,6 @@ namespace GuiPs1.Commands
 
         private readonly List<View> views = new List<View>();
 
-        protected override void BeginProcessing()
-        {
-            Application.Init();
-        }
-
         protected override void ProcessRecord()
         {
             if (this.View is { })
@@ -28,16 +23,6 @@ namespace GuiPs1.Commands
             Application.Top.Add(this.views.ToArray());
             Application.Run();
             Application.Shutdown();
-        }
-
-        private void AddMenu()
-        {
-            var menu = new MenuBar(new MenuBarItem[] {
-                new MenuBarItem ("_File", new MenuItem [] {
-                    new MenuItem ("_Quit", "", () => { Application.RequestStop(); })
-                })
-            });
-            this.views.Add(menu);
         }
     }
 }
