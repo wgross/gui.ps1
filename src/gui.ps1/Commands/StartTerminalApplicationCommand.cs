@@ -23,6 +23,10 @@ namespace GuiPs1.Commands
             Application.Top.Add(this.views.ToArray());
             Application.Run();
             Application.Shutdown();
+            // this is hacky. Most likely i have to garantee that 
+            // Init is called in the first BeginProcessing for all commands run after the last shutdown once
+            // maybe using a static flag in a cmdlet base class for this?
+            Application.Init();
         }
     }
 }

@@ -29,6 +29,8 @@ $show_message_box = {
         New-TerminalCheckBox -Text "Checkbox" -X 3 -Y 7
         # a radio group with two label
         New-TerminalRadioGroup -X 3 -Y 9 -RadioLabels "one","two"
+        # a comobox disying an array of objects
+        New-TerminalComboBox -X 3 -Y 12 -Width 10 -Height 10 -Source "test",1
 
     ) | New-TerminalWindow -Title "test" -X 0 -Y 0
 
