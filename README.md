@@ -19,7 +19,7 @@ New-TerminalButton -Text "Quit" -Clicked { [Application]::RequestStop() }
 ```
 - Controls receive the child views from the pipe: 
 ```powershell
-New-TerminalLabel -Text  "This is a Label" -X 3 -Y 1 | | New-TerminalWindow -Title "test"
+New-TerminalLabel -Text  "This is a Label" -X 3 -Y 1 | New-TerminalWindow -Title "test"
 ```
 At least the simple cases (see: test.ui.ps1 in projects root) are working but not all properties of the controls or the event handlers are yet accessible by the cmdlets.
 Also more complex scenarios like scrollviewer I have not explored yet. 
