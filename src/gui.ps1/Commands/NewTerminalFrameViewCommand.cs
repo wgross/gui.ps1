@@ -5,7 +5,7 @@ namespace GuiPs1.Commands
 {
     [Cmdlet(VerbsCommon.New, "TerminalFrameView")]
     [OutputType(typeof(FrameView))]
-    public sealed class NewTerminalFrameViewCommand : PSCmdlet
+    public sealed class NewTerminalFrameViewCommand : NewTerminalViewCommandBase
     {
         [Parameter(ValueFromPipeline = true)]
         [ValidateNotNull]
@@ -30,6 +30,8 @@ namespace GuiPs1.Commands
 
         protected override void BeginProcessing()
         {
+            base.BeginProcessing();
+
             this.frameView = new FrameView(this.Title)
             {
                 X = this.X,

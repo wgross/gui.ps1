@@ -5,7 +5,7 @@ namespace GuiPs1.Commands
 {
     [Cmdlet(VerbsCommon.New, "TerminalButton")]
     [OutputType(typeof(Button))]
-    public sealed class NewTerminalButtonCommand : PSCmdlet
+    public sealed class NewTerminalButtonCommand : NewTerminalViewCommandBase
     {
         [Parameter(Mandatory = true)]
         public string Text { get; set; } = string.Empty;
@@ -23,6 +23,8 @@ namespace GuiPs1.Commands
 
         [Parameter()]
         public ScriptBlock Clicked { get; set; } = ScriptBlock.Create(string.Empty);
+
+        protected override void BeginProcessing() => base.BeginProcessing();
 
         protected override void ProcessRecord()
         {

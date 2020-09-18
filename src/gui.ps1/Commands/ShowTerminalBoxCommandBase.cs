@@ -2,7 +2,7 @@
 
 namespace GuiPs1.Commands
 {
-    public abstract class ShowTerminalBoxCommandBase : PSCmdlet
+    public abstract class ShowTerminalBoxCommandBase : NewTerminalViewCommandBase
     {
         [Parameter(Mandatory = true)]
         public string Message { get; set; } = string.Empty;
@@ -19,6 +19,8 @@ namespace GuiPs1.Commands
 
         [Parameter]
         public int Width { get; set; } = 0;
+
+        protected override void BeginProcessing() => base.BeginProcessing();
 
         protected override void ProcessRecord() => this.WriteObject(this.ShowBox(this.Width, this.Height, this.Title, this.Message, this.Buttons));
 

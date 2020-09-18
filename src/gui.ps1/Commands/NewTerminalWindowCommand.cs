@@ -5,7 +5,7 @@ namespace GuiPs1.Commands
 {
     [Cmdlet(VerbsCommon.New, "TerminalWindow")]
     [OutputType(typeof(Window))]
-    public sealed class NewTerminalWindowCommand : PSCmdlet
+    public sealed class NewTerminalWindowCommand : NewTerminalViewCommandBase
     {
         [Parameter(ValueFromPipeline = true)]
         [ValidateNotNull]
@@ -30,6 +30,8 @@ namespace GuiPs1.Commands
 
         protected override void BeginProcessing()
         {
+            base.BeginProcessing();
+
             this.window = new Window(this.Title)
             {
                 X = this.X,

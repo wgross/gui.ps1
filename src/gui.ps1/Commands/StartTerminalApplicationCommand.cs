@@ -5,12 +5,14 @@ using Terminal.Gui;
 namespace GuiPs1.Commands
 {
     [Cmdlet(VerbsLifecycle.Start, "TerminalApplication")]
-    public class StartTerminalApplicationCommand : PSCmdlet
+    public class StartTerminalApplicationCommand : NewTerminalViewCommandBase
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true)]
         public View? View { get; set; }
 
         private readonly List<View> views = new List<View>();
+
+        protected override void BeginProcessing() => base.BeginProcessing();
 
         protected override void ProcessRecord()
         {
@@ -20,13 +22,16 @@ namespace GuiPs1.Commands
 
         protected override void EndProcessing()
         {
-            Application.Top.Add(this.views.ToArray());
-            Application.Run();
-            Application.Shutdown();
-            // this is hacky. Most likely i have to garantee that 
-            // Init is called in the first BeginProcessing for all commands run after the last shutdown once
-            // maybe using a static flag in a cmdlet base class for this?
-            Application.Init();
+            try
+            {
+                Application.Top.Add(this.views.ToArray());
+                Application.Run();
+                Application.Shutdown();
+            }
+            finally
+            {
+                this.Shutdown();
+            }
         }
     }
 }

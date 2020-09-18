@@ -6,12 +6,14 @@ namespace GuiPs1.Commands
 {
     [Cmdlet(VerbsCommon.New, "TerminalStatusBar")]
     [OutputType(typeof(StatusBar))]
-    public sealed class NewTerminalStatusBarCommand : PSCmdlet
+    public sealed class NewTerminalStatusBarCommand : NewTerminalViewCommandBase
     {
         private readonly List<StatusItem> statusItems = new List<StatusItem>();
 
         [Parameter(Mandatory = true, ValueFromPipeline = true)]
         public StatusItem? StatusItem { get; set; }
+
+        protected override void BeginProcessing() => base.BeginProcessing();
 
         protected override void ProcessRecord()
         {

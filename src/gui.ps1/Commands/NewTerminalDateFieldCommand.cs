@@ -6,7 +6,7 @@ namespace GuiPs1.Commands
 {
     [Cmdlet(VerbsCommon.New, "TerminalDateField")]
     [OutputType(typeof(DateField))]
-    public sealed class NewTerminalDateFieldCommand : PSCmdlet
+    public sealed class NewTerminalDateFieldCommand : NewTerminalViewCommandBase
     {
         [Parameter(Mandatory = true)]
         public DateTime Date { get; set; }
@@ -21,6 +21,8 @@ namespace GuiPs1.Commands
 
         [Parameter()]
         public SwitchParameter IsShort { get; set; }
+
+        protected override void BeginProcessing() => base.BeginProcessing();
 
         protected override void ProcessRecord() => this.WriteObject(new DateField(this.X, this.Y, this.Date, this.IsShort));
     }

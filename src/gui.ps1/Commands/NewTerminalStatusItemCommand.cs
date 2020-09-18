@@ -5,7 +5,7 @@ namespace GuiPs1.Commands
 {
     [Cmdlet(VerbsCommon.New, "TerminalStatusItem")]
     [OutputType(typeof(StatusItem))]
-    public sealed class NewTerminalStatusItemCommand : PSCmdlet
+    public sealed class NewTerminalStatusItemCommand : NewTerminalViewCommandBase
     {
         [Parameter(Mandatory = true)]
         public Key Key { get; set; }
@@ -16,6 +16,8 @@ namespace GuiPs1.Commands
         [Parameter]
         [ValidateNotNull]
         public ScriptBlock Action { get; set; } = ScriptBlock.Create(string.Empty);
+
+        protected override void BeginProcessing() => base.BeginProcessing();
 
         protected override void ProcessRecord() => this.WriteObject(new StatusItem(this.Key, this.Title, () => this.Action.InvokeReturnAsIs()));
     }

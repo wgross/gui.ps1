@@ -6,7 +6,7 @@ namespace GuiPs1.Commands
 {
     [Cmdlet(VerbsCommon.New, "TerminalComboBox")]
     [OutputType(typeof(ComboBox))]
-    public sealed class NewTerminalComboBoxCommand : PSCmdlet
+    public sealed class NewTerminalComboBoxCommand : NewTerminalViewCommandBase
     {
         [Parameter(Mandatory = true)]
         public object[] Source { get; set; } = new object[0];
@@ -26,6 +26,8 @@ namespace GuiPs1.Commands
         [Parameter(Mandatory = true)]
         [ValidateRange(0, int.MaxValue)]
         public int Height { get; set; } = 0;
+
+        protected override void BeginProcessing() => base.BeginProcessing();
 
         private Rect Rect() => new Rect(this.X, this.Y, this.Width, this.Height);
 

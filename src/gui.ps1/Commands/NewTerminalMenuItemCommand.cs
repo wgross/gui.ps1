@@ -6,7 +6,7 @@ namespace GuiPs1.Commands
     [Cmdlet(VerbsCommon.New, "TerminalMenuItem")]
     [CmdletBinding(DefaultParameterSetName = "withAction")]
     [OutputType(typeof(MenuItem))]
-    public sealed class NewTerminalMenuItemCommand : PSCmdlet
+    public sealed class NewTerminalMenuItemCommand : NewTerminalViewCommandBase
     {
         [Parameter(Mandatory = true)]
         public string Title { get; set; } = string.Empty;
@@ -24,6 +24,8 @@ namespace GuiPs1.Commands
 
         [Parameter(ParameterSetName = "quit")]
         public SwitchParameter Quit { get; set; }
+
+        protected override void BeginProcessing() => base.BeginProcessing();
 
         protected override void EndProcessing()
         {

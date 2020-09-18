@@ -5,7 +5,7 @@ using Terminal.Gui;
 namespace GuiPs1.Commands
 {
     [Cmdlet(VerbsCommon.New, "TerminalLabel")]
-    public sealed class NewTerminalLabelCommand : PSCmdlet
+    public sealed class NewTerminalLabelCommand : NewTerminalViewCommandBase
     {
         [Parameter(Mandatory = true)]
         public ustring Text { get; private set; } = string.Empty;
@@ -17,6 +17,8 @@ namespace GuiPs1.Commands
         [Parameter]
         [ValidateRange(0, int.MaxValue)]
         public int Y { get; set; } = 0;
+
+        protected override void BeginProcessing() => base.BeginProcessing();
 
         protected override void ProcessRecord() => this.WriteObject(new Label(this.X, this.Y, this.Text));
     }

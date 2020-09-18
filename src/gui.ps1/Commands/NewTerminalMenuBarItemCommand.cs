@@ -6,7 +6,7 @@ namespace GuiPs1.Commands
 {
     [Cmdlet(VerbsCommon.New, "TerminalMenuBarItem")]
     [OutputType(typeof(MenuBarItem))]
-    public sealed class NewTerminalMenuBarItemCommand : PSCmdlet
+    public sealed class NewTerminalMenuBarItemCommand : NewTerminalViewCommandBase
     {
         [Parameter(Mandatory = true)]
         public string Title { get; set; } = string.Empty;
@@ -16,6 +16,8 @@ namespace GuiPs1.Commands
         public MenuItem? MenuItem { get; set; }
 
         private readonly List<MenuItem> menueItems = new List<MenuItem>();
+
+        protected override void BeginProcessing() => base.BeginProcessing();
 
         protected override void ProcessRecord()
         {

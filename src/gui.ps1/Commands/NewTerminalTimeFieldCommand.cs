@@ -6,7 +6,7 @@ namespace GuiPs1.Commands
 {
     [Cmdlet(VerbsCommon.New, "TerminalTimeField")]
     [OutputType(typeof(TimeField))]
-    public sealed class NewTerminalTimeFieldCommand : PSCmdlet
+    public sealed class NewTerminalTimeFieldCommand : NewTerminalViewCommandBase
     {
         [Parameter(Mandatory = true)]
         public TimeSpan Time { get; set; }
@@ -21,6 +21,8 @@ namespace GuiPs1.Commands
 
         [Parameter()]
         public SwitchParameter IsShort { get; set; }
+
+        protected override void BeginProcessing() => base.BeginProcessing();
 
         protected override void ProcessRecord() => this.WriteObject(new TimeField(this.X, this.Y, this.Time, this.IsShort));
     }

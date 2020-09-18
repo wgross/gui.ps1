@@ -5,7 +5,7 @@ namespace GuiPs1.Commands
 {
     [Cmdlet(VerbsCommon.New, "TerminalTextField")]
     [OutputType(typeof(TextField))]
-    public sealed class NewTerminalTextFieldCommand : PSCmdlet
+    public sealed class NewTerminalTextFieldCommand : NewTerminalViewCommandBase
     {
         [Parameter(Mandatory = true)]
         public string Text { get; set; } = string.Empty;
@@ -21,6 +21,8 @@ namespace GuiPs1.Commands
         [Parameter(Mandatory = true)]
         [ValidateRange(0, int.MaxValue)]
         public int Width { get; set; } = 0;
+
+        protected override void BeginProcessing() => base.BeginProcessing();
 
         protected override void ProcessRecord() => this.WriteObject(new TextField(this.X, this.Y, this.Width, this.Text));
     }
