@@ -5,7 +5,7 @@ using Terminal.Gui;
 namespace GuiPs1.Commands
 {
     [Cmdlet(VerbsLifecycle.Start, "TerminalApplication")]
-    public class StartTerminalApplicationCommand : NewTerminalViewCommandBase
+    public class StartTerminalApplicationCommand : NewTerminalCommandBase
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true)]
         public View? View { get; set; }

@@ -3,7 +3,14 @@ using Terminal.Gui;
 
 namespace GuiPs1.Commands
 {
-    public abstract class NewTerminalViewCommandBase : PSCmdlet
+    public enum ViewPlacementParameterSets
+    {
+        Computed,
+
+        Absolute
+    }
+
+    public abstract class NewTerminalCommandBase : PSCmdlet
     {
         private static bool isInitialized = false;
 

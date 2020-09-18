@@ -2,7 +2,7 @@
 
 namespace GuiPs1.Commands
 {
-    public abstract class ShowTerminalBoxCommandBase : NewTerminalViewCommandBase
+    public abstract class ShowTerminalBoxCommandBase : NewTerminalCommandBase
     {
         [Parameter(Mandatory = true)]
         public string Message { get; set; } = string.Empty;

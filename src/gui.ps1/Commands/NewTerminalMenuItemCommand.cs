@@ -6,7 +6,7 @@ namespace GuiPs1.Commands
     [Cmdlet(VerbsCommon.New, "TerminalMenuItem")]
     [CmdletBinding(DefaultParameterSetName = "withAction")]
     [OutputType(typeof(MenuItem))]
-    public sealed class NewTerminalMenuItemCommand : NewTerminalViewCommandBase
+    public sealed class NewTerminalMenuItemCommand : NewTerminalCommandBase
     {
         [Parameter(Mandatory = true)]
         public string Title { get; set; } = string.Empty;

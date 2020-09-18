@@ -7,7 +7,7 @@ namespace GuiPs1.Commands
 {
     [Cmdlet(VerbsCommon.New, "TerminalRadioGroup")]
     [OutputType(typeof(RadioGroup))]
-    public sealed class NewTerminalRadioGroupCommand : NewTerminalViewCommandBase
+    public sealed class NewTerminalRadioGroupCommand : NewTerminalCommandBase
     {
         [Parameter(Mandatory = true)]
         public string[] RadioLabels = new string[0];

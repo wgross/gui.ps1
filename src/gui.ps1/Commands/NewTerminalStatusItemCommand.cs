@@ -5,7 +5,7 @@ namespace GuiPs1.Commands
 {
     [Cmdlet(VerbsCommon.New, "TerminalStatusItem")]
     [OutputType(typeof(StatusItem))]
-    public sealed class NewTerminalStatusItemCommand : NewTerminalViewCommandBase
+    public sealed class NewTerminalStatusItemCommand : NewTerminalCommandBase
     {
         [Parameter(Mandatory = true)]
         public Key Key { get; set; }

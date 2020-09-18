@@ -4,26 +4,37 @@ using Terminal.Gui;
 
 namespace GuiPs1.Commands
 {
-    [Cmdlet(VerbsCommon.New, "TerminalDateField")]
+    [Cmdlet(VerbsCommon.New, "TerminalDateField", DefaultParameterSetName = nameof(ViewPlacementParameterSets.Computed))]
     [OutputType(typeof(DateField))]
-    public sealed class NewTerminalDateFieldCommand : NewTerminalViewCommandBase
+    public sealed class NewTerminalDateFieldCommand : NewTerminalTextFieldCommandBase<DateField>
     {
         [Parameter(Mandatory = true)]
         public DateTime Date { get; set; }
 
-        [Parameter(Mandatory = true)]
-        [ValidateRange(0, int.MaxValue)]
-        public int X { get; set; } = 0;
-
-        [Parameter(Mandatory = true)]
-        [ValidateRange(0, int.MaxValue)]
-        public int Y { get; set; } = 0;
+        [Parameter()]
+        public SwitchParameter IsShortFormat { get; set; }
 
         [Parameter()]
-        public SwitchParameter IsShort { get; set; }
+        public ScriptBlock DateChanged { get; set; } = ScriptBlock.Create(string.Empty);
 
-        protected override void BeginProcessing() => base.BeginProcessing();
+        protected override void ProcessRecord()
+        {
+            var dateField = this.SetTextChanged(this.View());
 
-        protected override void ProcessRecord() => this.WriteObject(new DateField(this.X, this.Y, this.Date, this.IsShort));
+            if (this.MyInvocation.BoundParameters.ContainsKey(nameof(DateChanged)))
+                dateField.DateChanged = ev => this.DateChanged.InvokeReturnAsIs(ev);
+
+            this.WriteObject(dateField);
+        }
+
+        protected override DateField View()
+        {
+            return this.ParameterSetName switch
+            {
+                nameof(ViewPlacementParameterSets.Absolute) => new DateField(this.X, this.Y, this.Date, this.IsShortFormat),
+
+                _ => new DateField(this.Date) { IsShortFormat = this.IsShortFormat }
+            };
+        }
     }
 }

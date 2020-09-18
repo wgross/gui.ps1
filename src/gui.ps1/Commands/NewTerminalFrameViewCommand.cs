@@ -5,7 +5,7 @@ namespace GuiPs1.Commands
 {
     [Cmdlet(VerbsCommon.New, "TerminalFrameView")]
     [OutputType(typeof(FrameView))]
-    public sealed class NewTerminalFrameViewCommand : NewTerminalViewCommandBase
+    public sealed class NewTerminalFrameViewCommand : NewTerminalCommandBase
     {
         [Parameter(ValueFromPipeline = true)]
         [ValidateNotNull]

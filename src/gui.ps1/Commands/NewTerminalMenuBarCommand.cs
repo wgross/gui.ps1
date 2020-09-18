@@ -6,7 +6,7 @@ namespace GuiPs1.Commands
 {
     [Cmdlet(VerbsCommon.New, "TerminalMenuBar")]
     [OutputType(typeof(MenuBar))]
-    public sealed class NewTerminalMenuBarCommand : NewTerminalViewCommandBase
+    public sealed class NewTerminalMenuBarCommand : NewTerminalCommandBase
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true)]
         public MenuBarItem? MenuBarItem { get; set; }

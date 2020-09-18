@@ -5,7 +5,7 @@ namespace GuiPs1.Commands
 {
     [Cmdlet(VerbsCommon.New, "TerminalWindow")]
     [OutputType(typeof(Window))]
-    public sealed class NewTerminalWindowCommand : NewTerminalViewCommandBase
+    public sealed class NewTerminalWindowCommand : NewTerminalCommandBase
     {
         [Parameter(ValueFromPipeline = true)]
         [ValidateNotNull]

@@ -4,26 +4,37 @@ using Terminal.Gui;
 
 namespace GuiPs1.Commands
 {
-    [Cmdlet(VerbsCommon.New, "TerminalTimeField")]
+    [Cmdlet(VerbsCommon.New, "TerminalTimeField", DefaultParameterSetName = nameof(ViewPlacementParameterSets.Computed))]
     [OutputType(typeof(TimeField))]
-    public sealed class NewTerminalTimeFieldCommand : NewTerminalViewCommandBase
+    public sealed class NewTerminalTimeFieldCommand : NewTerminalTextFieldCommandBase<TimeField>
     {
         [Parameter(Mandatory = true)]
         public TimeSpan Time { get; set; }
 
-        [Parameter(Mandatory = true)]
-        [ValidateRange(0, int.MaxValue)]
-        public int X { get; set; } = 0;
-
-        [Parameter(Mandatory = true)]
-        [ValidateRange(0, int.MaxValue)]
-        public int Y { get; set; } = 0;
+        [Parameter()]
+        public SwitchParameter IsShortFormat { get; set; }
 
         [Parameter()]
-        public SwitchParameter IsShort { get; set; }
+        public ScriptBlock TimeChanged { get; set; } = ScriptBlock.Create(string.Empty);
 
-        protected override void BeginProcessing() => base.BeginProcessing();
+        protected override void ProcessRecord()
+        {
+            var timeField = this.SetTextChanged(this.View());
 
-        protected override void ProcessRecord() => this.WriteObject(new TimeField(this.X, this.Y, this.Time, this.IsShort));
+            if (this.MyInvocation.BoundParameters.ContainsKey(nameof(TimeChanged)))
+                timeField.TimeChanged = ev => this.TimeChanged.InvokeReturnAsIs(ev);
+
+            this.WriteObject(timeField);
+        }
+
+        protected override TimeField View()
+        {
+            return this.ParameterSetName switch
+            {
+                nameof(ViewPlacementParameterSets.Absolute) => new TimeField(this.X, this.Y, this.Time, this.IsShortFormat),
+
+                _ => new TimeField(this.Time) { IsShortFormat = this.IsShortFormat }
+            };
+        }
     }
 }

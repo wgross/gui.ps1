@@ -5,7 +5,7 @@ namespace GuiPs1.Commands
 {
     [Cmdlet(VerbsCommon.New, "TerminalListView")]
     [OutputType(typeof(ListView))]
-    public sealed class NewTerminalListViewCommand : NewTerminalViewCommandBase
+    public sealed class NewTerminalListViewCommand : NewTerminalCommandBase
     {
         [Parameter(Mandatory = true)]
         public object[] Source { get; set; } = new object[0];

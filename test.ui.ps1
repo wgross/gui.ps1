@@ -11,6 +11,13 @@ $show_message_box = {
     Show-TerminalErrorBox -Message "you chose button no $result" -Title "title" -Buttons "OK"
 }
 
+$field_changed = { param($change) Show-TerminalMessageBox -Height 10 -Width 30 -Message "field view changed: $($change.GetType())" -Title "Change" -Buttons "OK" }
+
+$clicked = { 
+    # not working with Label ... Label waits for Clicked but gets Pressed
+    Show-TerminalMessageBox -Height 10 -Width 30 -Message "view clicked" -Title "Clicked" -Buttons "OK" 
+}
+
 # create the application with menue and statusbar
 @(
     # build the menu
@@ -32,11 +39,11 @@ $show_message_box = {
         # a combobox dislaying an array of objects
         New-TerminalComboBox -X 3 -Y 12 -Width 10 -Height 10 -Source "test",1
         # a text fields dislaying a defualt text
-        New-TerminalTextField -X 3 -Y 12 -Width 10 -Text "default"
+        New-TerminalTextField -X 3 -Y 12 -Width 10 -Text "default" -TextChanged $field_changed
         # a text fields dislaying a given datetime
-        New-TerminalDateField -X 3 -Y 14 -Date (Get-Date) -IsShort
+        New-TerminalDateField -X 3 -Y 14 -Date (Get-Date) -IsShortFormat -DateChanged $field_changed
         # a text fields dislaying a given datetime
-        New-TerminalTimeField -X 3 -Y 16 -Time ([TimeSpan]::FromHours(12)) -IsShort
+        New-TerminalTimeField -X 3 -Y 16 -Time ([TimeSpan]::FromHours(12)) -IsShortFormat -TimeChanged $field_changed
 
         # listview displaying a mixed list of objects
         New-TerminalListView -X 20 -Y 1 -Width 10 -Height 10 -Source "test",1,(Get-Date),"a","b","c"

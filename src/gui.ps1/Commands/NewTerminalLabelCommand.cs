@@ -4,22 +4,34 @@ using Terminal.Gui;
 
 namespace GuiPs1.Commands
 {
-    [Cmdlet(VerbsCommon.New, "TerminalLabel")]
-    public sealed class NewTerminalLabelCommand : NewTerminalViewCommandBase
+    [Cmdlet(VerbsCommon.New, "TerminalLabel", DefaultParameterSetName = nameof(ViewPlacementParameterSets.Computed))]
+    [OutputType(typeof(Label))]
+    public sealed class NewTerminalLabelCommand : NewTerminalPrimitiveViewCommandBase<Label>
     {
         [Parameter(Mandatory = true)]
         public ustring Text { get; private set; } = string.Empty;
 
-        [Parameter]
-        [ValidateRange(0, int.MaxValue)]
-        public int X { get; set; } = 0;
+        [Parameter()]
+        public ScriptBlock Clicked { get; set; } = ScriptBlock.Create(string.Empty);
 
-        [Parameter]
-        [ValidateRange(0, int.MaxValue)]
-        public int Y { get; set; } = 0;
+        protected override void ProcessRecord()
+        {
+            var label = this.View();
 
-        protected override void BeginProcessing() => base.BeginProcessing();
+            if (this.MyInvocation.BoundParameters.ContainsKey(nameof(Clicked)))
+                label.Clicked = () => this.Clicked.InvokeReturnAsIs();
 
-        protected override void ProcessRecord() => this.WriteObject(new Label(this.X, this.Y, this.Text));
+            this.WriteObject(label);
+        }
+
+        protected override Label View()
+        {
+            return this.ParameterSetName switch
+            {
+                nameof(ViewPlacementParameterSets.Absolute) => new Label(this.X, this.Y, this.Text),
+
+                _ => new Label(this.Text)
+            };
+        }
     }
 }

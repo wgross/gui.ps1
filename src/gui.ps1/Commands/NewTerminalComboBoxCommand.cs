@@ -6,7 +6,7 @@ namespace GuiPs1.Commands
 {
     [Cmdlet(VerbsCommon.New, "TerminalComboBox")]
     [OutputType(typeof(ComboBox))]
-    public sealed class NewTerminalComboBoxCommand : NewTerminalViewCommandBase
+    public sealed class NewTerminalComboBoxCommand : NewTerminalCommandBase
     {
         [Parameter(Mandatory = true)]
         public object[] Source { get; set; } = new object[0];
