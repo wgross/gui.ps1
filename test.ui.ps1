@@ -33,6 +33,8 @@ $show_message_box = {
         New-TerminalComboBox -X 3 -Y 12 -Width 10 -Height 10 -Source "test",1
         # listview displaying a miced list of objects
         New-TerminalListView -X 20 -Y 1 -Width 10 -Height 10 -Source "test",1,(Get-Date),"a","b","c"
+        # Draw a frame
+        New-TerminalFrameView -X 20 -Y 10 -Width 10 -Height 10 -Title "Frameview"
     
     ) | New-TerminalWindow -Title "test" -X 0 -Y 0
 
