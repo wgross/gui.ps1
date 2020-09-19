@@ -5,7 +5,7 @@ try {
     Pop-Location
 }
 
-"$PSScriptRoot\src\gui.ps1\bin\Debug\netstandard2.1\publish"|Push-Location
+"$PSScriptRoot\src\gui.ps1\bin\Debug\netstandard2.0\publish"|Push-Location
 try {
     Import-Module "./gui.ps1.dll"    
 } finally {
